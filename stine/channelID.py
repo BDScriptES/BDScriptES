@@ -1,4 +1,4 @@
-def execute(code, ctx, args):
+def execute(code, ctx=None, args=None):
     """
     Reemplaza $channelID con el ID del canal donde se ejecuta el comando.
     """

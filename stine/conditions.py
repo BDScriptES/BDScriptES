@@ -1,6 +1,7 @@
 OPERADORES_VALIDOS = {">", "<", ">=", "<=", "!=", "=="}
 
 from .var import variables
+from .var import execute as var
 from .guildID import execute as guildID
 from .channelID import execute as channelID
 from .messageID import execute as messageID
@@ -13,12 +14,7 @@ def es_numero(valor):
     except ValueError:
         return False
 
-def reemplazar_variables(valor):
-    """Reemplaza $var[n] por su valor almacenado en el diccionario."""
-    if valor.startswith("$var[") and valor.endswith("]"):
-        clave = valor[5:-1]  # Extrae el nombre de la variable
-        return variables.get(clave, "")  # Si no existe, devuelve "0"
-    return valor
+
 
 def evaluate_condition(left, operador, right, ctx):
     left = guildID(left, ctx)
@@ -28,8 +24,8 @@ def evaluate_condition(left, operador, right, ctx):
 
 
 
-    left = reemplazar_variables(left)
-    right = reemplazar_variables(right)
+    left = var(left)
+    right = var(right)
 
     if es_numero(left) and es_numero(right):
         left, right = float(left), float(right)
